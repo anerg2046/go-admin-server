@@ -1,0 +1,15 @@
+{{define "index.html"}}
+<!doctype html>
+<html lang="en">
+
+{{ template "layout/head.html" . }}
+
+<body>
+    <div><img src="/static/img/API.png" /></div>
+    <div>{{ .ip }}</div>
+    <div><button onclick="javascript:help();">click</button></div>
+    {{ template "layout/footer.html" . }}
+</body>
+
+</html>
+{{ end }}
