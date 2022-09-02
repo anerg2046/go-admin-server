@@ -3,12 +3,13 @@ package main
 import (
 	// 必须在import第一位，否则无法获取正确的配置
 	_ "github.com/sakirsensoy/genv/dotenv/autoload"
-
-	"log"
+	"go.uber.org/zap"
 
 	"go-app/app/server"
 	"go-app/asset"
 	"go-app/lib/embedfs"
+	"go-app/lib/logger"
+	"go-app/lib/validator"
 	"html/template"
 
 	"github.com/gin-contrib/static"
@@ -16,6 +17,7 @@ import (
 )
 
 func main() {
+	validator.NewValidator()
 
 	engin := server.NewGinEngine()
 
@@ -44,7 +46,7 @@ func assetReader(path string, templ *template.Template) {
 			content, _ := asset.ViewFS.ReadFile(path + "/" + f.Name())
 			_, err := templ.Parse(string(content))
 			if err != nil {
-				log.Println(err)
+				logger.Error("[EMBED VIEW]", zap.Error(err))
 			}
 		}
 	}
