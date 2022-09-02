@@ -9,3 +9,7 @@ func MysqlDSN(host, user, pass, port, dbname string) string {
 func PostgresDSN(host, user, pass, port, dbname string) string {
 	return fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Shanghai", host, user, pass, dbname, port)
 }
+
+func MssqlDSN(host, user, pass, port, dbname string) string {
+	return fmt.Sprintf("sqlserver://%s:%s@%s:%s?database=%s", user, pass, host, port, dbname)
+}
