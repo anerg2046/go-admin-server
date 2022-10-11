@@ -35,14 +35,8 @@ type RabbitConfig struct {
 	NoLocal  bool   //若设置为true,则表示为不能将同一个connection中发送的消息传递给这个connection中的消费者
 }
 
-// 创建结构体实例，参数:地址、队列名称、交换机名称和bind的key
-func NewRabbitMQ(config RabbitConfig) *RabbitMQ {
-	return &RabbitMQ{config: config, Payload: make(chan []byte, 512)}
-}
-
-func NewSimple(config RabbitConfig) (rabbitmq *RabbitMQ) {
-
-	rabbitmq = NewRabbitMQ(config)
+func NewRabbitMQ(config RabbitConfig) (rabbitmq *RabbitMQ) {
+	rabbitmq = &RabbitMQ{config: config, Payload: make(chan []byte, 512)}
 	rabbitmq.Connect()
 	return rabbitmq
 }
@@ -70,8 +64,9 @@ func (r *RabbitMQ) Connect() {
 
 }
 
-// 关闭conn和chanel的方法
+// 关闭
 func (r *RabbitMQ) Destory() {
 	r.channel.Close()
 	r.conn.Close()
+	close(r.Payload)
 }
