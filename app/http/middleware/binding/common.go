@@ -13,7 +13,9 @@ import (
 	"github.com/gin-gonic/gin/binding"
 )
 
-type Common struct{}
+var Common = new(common)
+
+type common struct{}
 
 type ID struct {
 	ID uint `form:"id" json:"id" binding:"required,gte=1" label:"ID"`
@@ -28,7 +30,7 @@ type Pager struct {
 	Size int `form:"size" json:"size,omitempty" binding:"omitempty,gte=1" label:"每页数量"`
 }
 
-func (Common) ID() gin.HandlerFunc {
+func (common) ID() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var err error
 		var id ID
@@ -42,7 +44,7 @@ func (Common) ID() gin.HandlerFunc {
 	}
 }
 
-func (Common) Genre() gin.HandlerFunc {
+func (common) Genre() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var genre Genre
 		params, err := bindParams(c, genre)
@@ -55,7 +57,7 @@ func (Common) Genre() gin.HandlerFunc {
 	}
 }
 
-func (Common) Pager() gin.HandlerFunc {
+func (common) Pager() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var pager Pager
 		params, err := bindParams(c, pager)

@@ -6,8 +6,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type TestController struct{}
+var TestController = new(testController)
 
-func (TestController) Ip(c *gin.Context) response.Json {
+type testController struct{}
+
+func (testController) Ip(c *gin.Context) response.Json {
 	return response.NewJson().WithData(c.ClientIP())
 }

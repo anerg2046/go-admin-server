@@ -16,8 +16,7 @@ func RegisterApiRouter(r *gin.Engine) {
 	v1 := r.Group("/v1")
 	{
 		// 测试接口
-		testController := new(api.TestController)
-		v1.GET("/", response.JSON()(testController.Ip))
+		v1.GET("/", response.JSON()(api.TestController.Ip))
 	}
 
 	r.NoRoute(func(c *gin.Context) {
