@@ -1,0 +1,3 @@
+[submodule "lib"]
+	path = lib
+	url = ssh://git@gitea.mooim.com:2222/COM.ANERG/go-lib.git
