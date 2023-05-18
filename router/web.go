@@ -15,7 +15,7 @@ func RegisterWebRouter(r *gin.Engine) {
 	})
 
 	TestController := new(web.TestController)
-	r.GET("/", response.HTML()(TestController.Ip))
+	r.GET("/", response.HTML(TestController.Ip))
 
 	r.NoRoute(func(c *gin.Context) {
 		// 实现内部重定向

@@ -14,9 +14,10 @@ type jwtConf struct {
 
 // 载荷，可以加一些自己需要的信息
 type JwtClaims struct {
-	ID     uint   `json:"id,omitempty"`
-	Nick   string `json:"nick,omitempty"`
-	Avatar string `json:"avatar,omitempty"`
+	ID       uint   `json:"id,omitempty"`
+	Username string `json:"username,omitempty"`
+	Nick     string `json:"nick,omitempty"`
+	Avatar   string `json:"avatar,omitempty"`
 	jwt.StandardClaims
 }
 
