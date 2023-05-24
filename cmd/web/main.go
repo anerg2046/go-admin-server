@@ -7,6 +7,7 @@ import (
 
 	"go-app/app/server"
 	"go-app/asset"
+	"go-app/config"
 	"go-app/lib/embedfs"
 	"go-app/lib/logger"
 	"go-app/lib/validator"
@@ -17,6 +18,7 @@ import (
 )
 
 func main() {
+	config.APP.Mode = config.MODE_WEB
 	validator.NewValidator()
 
 	engin := server.NewGinEngine()

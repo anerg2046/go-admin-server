@@ -5,10 +5,12 @@ import (
 	_ "github.com/sakirsensoy/genv/dotenv/autoload"
 
 	"go-app/app/server"
+	"go-app/config"
 	"go-app/lib/validator"
 )
 
 func main() {
+	config.APP.Mode = config.MODE_API
 	validator.NewValidator()
 	app := server.NewApiServer(server.NewGinEngine())
 	app.Start()

@@ -30,6 +30,10 @@ type Pager struct {
 	Size int `form:"size" json:"size,omitempty" binding:"omitempty,gte=1" label:"每页数量"`
 }
 
+type Keyword struct {
+	Keyword string `form:"keyword" json:"keyword"`
+}
+
 func (common) ID() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var err error
@@ -39,7 +43,7 @@ func (common) ID() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-		c.Set("IdParams", params.ID)
+		c.Set("IdParams", params)
 		c.Next()
 	}
 }
@@ -72,6 +76,19 @@ func (common) Pager() gin.HandlerFunc {
 			params.Size = 50
 		}
 		c.Set("PagerParams", params)
+		c.Next()
+	}
+}
+
+func (common) Keyword() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var data Keyword
+		params, err := bindParams(c, data)
+		if err != nil {
+			c.Abort()
+			return
+		}
+		c.Set("KeywordParams", params)
 		c.Next()
 	}
 }

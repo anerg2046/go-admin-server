@@ -13,5 +13,5 @@ type casbinConf struct {
 
 var CASBIN = &casbinConf{
 	DriverName:     genv.Key("CASBIN_DRIVER").Default("postgres").String(),
-	DataSourceName: genv.Key("CASBIN_DSN").Default("db_dsn").String(),
+	DataSourceName: genv.Key("CASBIN_DSN").Default(DB_APP.DSN).String(),
 }

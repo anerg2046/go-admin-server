@@ -28,7 +28,7 @@ func init() {
 	APP = &appConf{
 		Debug:    genv.Key("APP_DEBUG").Default(false).Bool(),
 		Timezone: getTimezone(),
-		Port:     genv.Key("APP_PORT").Default(8010).Int(),
+		Port:     genv.Key("APP_PORT").Default(8020).Int(),
 	}
 }
 

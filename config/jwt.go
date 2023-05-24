@@ -16,8 +16,6 @@ type jwtConf struct {
 type JwtClaims struct {
 	ID       uint   `json:"id,omitempty"`
 	Username string `json:"username,omitempty"`
-	Nick     string `json:"nick,omitempty"`
-	Avatar   string `json:"avatar,omitempty"`
 	jwt.StandardClaims
 }
 

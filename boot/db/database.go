@@ -22,61 +22,11 @@ func init() {
 	// createTable()
 
 	// 如果只是单一数据库
-	Conn, err = database.ConnDB(config.DB.DSN, database.MYSQL)
+	Conn, err = database.ConnDB(config.DB_APP.DSN, config.DB_APP.DB_TYPE)
 	if err != nil {
 		panic(err)
 	}
 	Conn.Logger = logger.NewGormLogger()
-}
-
-func createTable() {
-	// if !Conn.Migrator().HasTable(&model.Customer{}) {
-	// 	Conn.Migrator().CreateTable(&model.Customer{})
-	// }
-	// if !Conn.Migrator().HasTable(&model.CustomerBrand{}) {
-	// 	Conn.Migrator().CreateTable(&model.CustomerBrand{})
-	// }
-	// if !Conn.Migrator().HasTable(&model.User{}) {
-	// 	Conn.Migrator().CreateTable(&model.User{})
-	// }
-	// if !Conn.Migrator().HasTable(&model.UserSns{}) {
-	// 	Conn.Migrator().CreateTable(&model.UserSns{})
-	// }
-	// if !Conn.Migrator().HasTable(&model.PhoneCheck{}) {
-	// 	Conn.Migrator().CreateTable(&model.PhoneCheck{})
-	// }
-	// if !Conn.Migrator().HasTable(&model.PreSimilar{}) {
-	// 	Conn.Migrator().CreateTable(&model.PreSimilar{})
-	// }
-	// if !Conn.Migrator().HasTable(&model.PreMissingBrand{}) {
-	// 	Conn.Migrator().CreateTable(&model.PreMissingBrand{})
-	// }
-
-	// ConnBusiness, _ := gorm.Open(database.GenDialector(config.DB_BUSINESS.DSN, database.POSTGRES), &gorm.Config{
-	// 	DisableForeignKeyConstraintWhenMigrating: true,
-	// 	PrepareStmt:                              true,
-	// })
-
-	// if !ConnBusiness.Migrator().HasTable(&model.BusinessCompany{}) {
-	// 	ConnBusiness.Migrator().CreateTable(&model.BusinessCompany{})
-	// }
-	// if !ConnBusiness.Migrator().HasTable(&model.Business{}) {
-	// 	ConnBusiness.Migrator().CreateTable(&model.Business{})
-	// }
-	// if !ConnBusiness.Migrator().HasTable(&model.BusinessNode{}) {
-	// 	ConnBusiness.Migrator().CreateTable(&model.BusinessNode{})
-	// }
-	// if !ConnBusiness.Migrator().HasTable(&model.BusinessSendHistory{}) {
-	// 	ConnBusiness.Migrator().CreateTable(&model.BusinessSendHistory{})
-	// }
-	// if !ConnBusiness.Migrator().HasTable(&model.BusinessTakeHistory{}) {
-	// 	ConnBusiness.Migrator().CreateTable(&model.BusinessTakeHistory{})
-	// }
-
-	// addGinIndex(ConnBusiness, "company", "name_used")
-	// addGinIndex(ConnBusiness, "company", "phone")
-	// addGinIndex(ConnBusiness, "company", "phone_check")
-	// addGinIndex(ConnBusiness, "node", "detail")
 }
 
 // postgres 添加json数据的gin索引
