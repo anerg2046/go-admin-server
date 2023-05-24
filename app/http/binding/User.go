@@ -2,6 +2,7 @@ package binding
 
 import (
 	"go-app/app/code"
+	"go-app/config"
 	"go-app/lib/httpclient"
 	"go-app/lib/response"
 	"net/http"
@@ -36,10 +37,10 @@ func (u userBinding) Login() gin.HandlerFunc {
 func (u userBinding) VerifyTurnstile() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		payload := map[string]string{
-			"secret":   "0x4AAAAAAADTj7oP4w2VowOc8GAxonfNv6E",
+			"secret":   config.CLOUDFLARE.TurnstileSecret,
 			"response": c.MustGet("TurnstileToken").(string),
 		}
-		url := "https://challenges.cloudflare.com/turnstile/v0/siteverify"
+		url := config.CLOUDFLARE.TurnstileUrl
 		var result = struct {
 			Success bool `json:"success,omitempty"`
 		}{}

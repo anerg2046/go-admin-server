@@ -17,7 +17,7 @@ const (
 type appConf struct {
 	Debug    bool
 	Env      string
-	Mode     APP_MODE // 运行模式 web 或者 api
+	Mode     APP_MODE // 运行模式 web 或者 api 无需在配置文件配置
 	Timezone *time.Location
 	Port     int
 }
