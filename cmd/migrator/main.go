@@ -5,6 +5,7 @@ import (
 	"time"
 
 	_ "github.com/sakirsensoy/genv/dotenv/autoload"
+	"github.com/wumansgy/goEncrypt/hash"
 	"gorm.io/gorm"
 
 	"go-app/app/enums"
@@ -156,7 +157,7 @@ func defaultUser(conn *gorm.DB) {
 				Phone:     "13000000000",
 				CreatedAt: time.Now(),
 			},
-			Password: "admin1234",
+			Password: hash.HmacSha256Hex([]byte(config.HASH.HmacSha256Key), "admin1234"),
 		},
 		{
 			UserApi: model.UserApi{
@@ -164,7 +165,7 @@ func defaultUser(conn *gorm.DB) {
 				Phone:     "13100000000",
 				CreatedAt: time.Now(),
 			},
-			Password: "test123456",
+			Password: hash.HmacSha256Hex([]byte(config.HASH.HmacSha256Key), "test123456"),
 		},
 	}
 
