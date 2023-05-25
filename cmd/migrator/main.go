@@ -11,6 +11,7 @@ import (
 	"go-app/boot/db"
 	"go-app/config"
 	"go-app/lib/database"
+	"go-app/lib/rbac"
 	"go-app/model"
 )
 
@@ -168,4 +169,7 @@ func defaultUser(conn *gorm.DB) {
 	}
 
 	conn.Create(&users)
+
+	rbac.New().AddRoleForUser("admin", "superadmin")
+	rbac.New().AddRoleForUser("test", "user")
 }
