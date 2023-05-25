@@ -1,0 +1,94 @@
+kind: pipeline
+name: goAdmin-后端
+type: docker
+
+clone:
+  depth: 1
+
+steps:
+  - name: submodules
+    image: alpine/git
+    environment:
+      SSH_PRIVATE_KEY:
+        from_secret: ssh_key
+    commands:
+      - sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories
+      - 'which ssh-agent || ( apk update && apk --no-cache add openssh-client)'
+      - eval $(ssh-agent -s)
+      - echo "$SSH_PRIVATE_KEY" > deploy.key
+      - chmod 0600 deploy.key
+      - ssh-add deploy.key
+      - mkdir -p ~/.ssh  
+      - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+      - git submodule update --init --recursive
+    
+  - name: 构建服务端镜像
+    pull: if-not-exists
+    image: plugins/docker
+    settings:
+      storage_driver: vfs
+      tags:
+        - latest
+        - ${DRONE_BUILD_NUMBER}
+      insecure: true
+      use_cache: true
+      registry:
+        from_secret: harbor_address
+      repo:
+        from_secret: harbor_repo
+      username:
+        from_secret: harbor_user
+      password:
+        from_secret: harbor_pass
+      context: ./
+      dockerfile: ./Dockerfile
+    when:
+      status:
+        - success
+
+
+  - name: deploy
+    image: alpine
+    pull: if-not-exists
+    commands:
+      - sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories
+      - apk update
+      - apk --no-cache add curl
+      # portainer hook
+      # - curl -XPOST http://192.168.1.9:9000/api/stacks/webhooks/ea389514-d123-4ce2-88e1-7385029e8af0
+
+  - name: send telegram notification
+    image: appleboy/drone-telegram
+    pull: if-not-exists
+    when:
+      status:
+        - success
+        - failure
+    settings:
+      token:
+        from_secret: telegram_token
+      to:
+        from_secret: telegram_to
+      format: markdown
+      message: >
+        {{#success build.status}}
+        ✅ Build #{{build.number}} of `{{repo.name}}` succeeded.
+        📝 Commit by {{commit.author}} on `{{commit.branch}}`:
+        ```
+        {{commit.message}}
+        ```
+        🌐 {{ build.link }}
+        {{else}}
+        ❌ Build #{{build.number}} of `{{repo.name}}` failed.
+        📝 Commit by {{commit.author}} on `{{commit.branch}}`:
+        ```
+        {{commit.message}}
+        ```
+        🌐 {{ build.link }}
+        {{/success}}
+
+trigger:
+  branch:
+    - master
+  event:
+    - push
