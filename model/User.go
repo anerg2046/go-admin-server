@@ -32,14 +32,14 @@ func (u *User) AfterFind(tx *gorm.DB) (err error) {
 }
 
 func (u *User) BeforeUpdate(tx *gorm.DB) (err error) {
-	if u.Username == "废墟" || u.Username == "测试用户" {
+	if u.Username == "admin" || u.Username == "test" {
 		return errors.New("默认用户禁止修改")
 	}
 	return
 }
 
 func (u *User) BeforeDelete(tx *gorm.DB) (err error) {
-	if u.Username == "废墟" || u.Username == "测试用户" {
+	if u.Username == "admin" || u.Username == "test" {
 		return errors.New("默认用户禁止删除")
 	}
 	rbac.New().DeleteRolesForUser(u.Username)
