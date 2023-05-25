@@ -1,6 +1,6 @@
 [submodule "lib"]
 	path = lib
-	url = ssh://git@gitea.mooim.com:2222/GO.APP/go-lib.git
+	url = git@github.com:anerg2046/go-app-lib.git
 [submodule "app/http/middleware"]
 	path = app/http/middleware
-	url = ssh://git@gitea.mooim.com:2222/GO.APP/gin-middleware.git
+	url = git@github.com:anerg2046/go-app-middleware.git
